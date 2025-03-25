@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 url_base = 'http://186.167.69.10:50080/proteoerp/api'
 
-@app.route('/login/login', methods=['POST'])
+@app.route('proteoerp/api/login/login', methods=['POST'])
 def login():
     user = request.form.get('user')
     password = request.form.get('password')
@@ -23,7 +23,7 @@ def login():
     except requests.exceptions.RequestException as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/sinvalub/post/buscar', methods=['POST'])
+@app.route('proteoerp/api/sinvalub/post/buscar', methods=['POST'])
 def search_product():
     token = request.headers.get('Authorization')
     data = request.get_json()
@@ -38,7 +38,7 @@ def search_product():
     except requests.exceptions.RequestException as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/sinvalub/post/actualizar', methods=['POST'])
+@app.route('proteoerp/api/sinvalub/post/actualizar', methods=['POST'])
 def save_new_loc():
     token = request.headers.get('Authorization')
     data = request.get_json()
