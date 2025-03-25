@@ -3,7 +3,7 @@ import requests
 
 app = Flask(__name__)
 
-url_base = 'http://10.0.100.2/proteoerp/api'
+url_base = 'http://186.167.69.10:50080/proteoerp/api'
 
 @app.route('/login/login', methods=['POST'])
 def login():
