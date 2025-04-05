@@ -5,7 +5,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-url_base = 'http://186.167.69.10:50080/proteoerp/api'
+url_base = 'http://186.167.69.10:50080/practica/api'
 
 @app.route('/login/login', methods=['POST'])
 def login():
@@ -60,6 +60,51 @@ def save_new_loc():
         return response.json(), response.status_code
     except requests.exceptions.RequestException as e:
         return jsonify({'error': str(e)}), 500
+    
+
+@app.route('/get/picking')
+def get_picking(): 
+    token = request.headers.get('Authorization')
+    data = {
+        "filters": {
+            "a.almacen": "0001"
+        }
+    }
+    if not token:
+        return jsonify({'error': 'Authorization header is missing'}), 401
+
+    url = f'{url_base}/pfac/get/picking'
+    headers = {'Authorization': token}
+
+    try:
+        response = requests.post(url, json=data, headers=headers)
+        response.raise_for_status()
+        return response.json(), response.status_code
+    except requests.exceptions.RequestException as e:
+        return jsonify({'error': str(e)}), 500
+    
+    
+@app.route('/post/picking', methods=['POST'])
+def post_picking():
+    token = request.headers.get('Authorization')
+    data = request.get_json()
+
+    if not token:
+        return jsonify({'error': 'Authorization header is missing'}), 401
+
+    url = f'{url_base}/pfac/post/picking'
+    headers = {'Authorization': token}
+
+    try:
+        response = requests.post(url, json=data, headers=headers)
+        response.raise_for_status()
+        return response.json(), response.status_code
+    except requests.exceptions.RequestException as e:
+        return jsonify({'error': str(e)}), 500
+    
+     
+
+
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=8000)
