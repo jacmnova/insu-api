@@ -5,7 +5,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-url_base = 'http://186.167.69.10:50080/practica/api'
+url_base = 'http://186.167.69.10:50080/proteoerp/api'
 
 @app.route('/login/login', methods=['POST'])
 def login():
